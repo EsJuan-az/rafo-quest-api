@@ -5,8 +5,9 @@ class Server {
   constructor(port){
     this.port = port;
     this.app = express();
-    this.setMiddlewares();
+    this.settings();
     this.setRoutes();
+    this.setMiddlewares();
   }
   setRoutes(){
     this.app.use('/user', UserRouter);
@@ -15,8 +16,10 @@ class Server {
       res.send('<h1>Rafo quest</h1>');
     });
   }
-  setMiddlewares(){
+  settings(){
     this.app.use(express.json());
+  }
+  setMiddlewares(){
     this.app.use(logErrors);
     this.app.use(ormErrorHandler);
     this.app.use(boomErrorHandler);
