@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14  # Puedes especificar la versión que necesites
+    container_name: rafoq_db
+    environment:
+      POSTGRES_USER: rafo
+      POSTGRES_PASSWORD: rafo
+      POSTGRES_DB: rafoq_db
+    ports:
+      - "5432:5432"  # Mapea el puerto 5432 del contenedor al puerto 5432 del host
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistencia de datos
+      
+volumes:
+  postgres_data:

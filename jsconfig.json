@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES6",               // Define la versión de ECMAScript
+    "module": "commonjs",           // El sistema de módulos (CommonJS o ESNext para ESModules)
+    "checkJs": true,                // Permite la verificación de errores en archivos .js
+    "allowSyntheticDefaultImports": true, // Permite importar módulos CommonJS como si fueran ESModules
+    "resolveJsonModule": true,
+  },
+  "exclude": ["node_modules", "**/node_modules/*"],       // Excluye la carpeta node_modules       // Incluye solo los archivos .js dentro de la carpeta src
+}
