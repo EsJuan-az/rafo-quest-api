@@ -4,7 +4,7 @@ const USER_TABLE = 'users';
 const userSchema = {
   id: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+    defaultValue: DataTypes.UUIDV4, 
     primaryKey: true,
   },
   auth0Id: {

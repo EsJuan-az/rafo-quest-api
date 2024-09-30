@@ -1,5 +1,6 @@
 const express = require('express');
 const UserRouter = require('../routes/user.route');
+const BookRouter = require('../routes/book.route');
 const { logErrors, ormErrorHandler, boomErrorHandler, errorHandler } = require('../middleware/error.handler');
 class Server { 
   constructor(port){
@@ -11,6 +12,7 @@ class Server {
   }
   setRoutes(){
     this.app.use('/user', UserRouter);
+    this.app.use('/book', BookRouter);
     // Configuración intermedia.
     this.app.get('/', (req, res) => {
       res.send('<h1>Rafo quest</h1>');
