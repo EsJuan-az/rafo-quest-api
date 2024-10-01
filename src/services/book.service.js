@@ -1,12 +1,12 @@
-const { notFound } = require("@hapi/boom");
+const { notFound } = require('@hapi/boom');
 const {
   models: { Book },
-} = require("../libs/sequelize");
+} = require('../libs/sequelize');
 class BookService {
   static async findAll(offset, limit) {
     const result = await Book.findAll({
       offset,
-      limit, 
+      limit,
     });
     return result;
   }
@@ -17,7 +17,7 @@ class BookService {
       },
     });
     if (!result) {
-      throw notFound("book not found");
+      throw notFound('book not found');
     }
     return result;
   }
