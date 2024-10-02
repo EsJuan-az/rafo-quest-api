@@ -1,13 +1,28 @@
-const { notFound } = require("@hapi/boom");
+const { notFound } = require('@hapi/boom');
 const {
   models: { User },
-} = require("../libs/sequelize");
+} = require('../libs/sequelize');
 class UserService {
   static async findAll(offset, limit) {
     const result = await User.findAll({
       offset,
       limit,
     });
+    return result;
+  }
+  static async findOrCreateByAuth0Id(auth0Id, data) {
+    let result = await User.findOne({
+      where: {
+        auth0Id,
+      },
+    });
+    if (!result) {
+      result = User.create({
+        auth0Id,
+        name: data.name,
+        avatar: data.avatar,
+      });
+    }
     return result;
   }
   static async findOne(id) {
@@ -17,7 +32,7 @@ class UserService {
       },
     });
     if (!result) {
-      throw notFound("user not found");
+      throw notFound('user not found');
     }
     return result;
   }

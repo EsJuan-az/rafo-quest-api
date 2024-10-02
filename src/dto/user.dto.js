@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 module.exports = {
   createUserDto: {
@@ -6,7 +6,7 @@ module.exports = {
       name: Joi.string().min(3).required(),
       auth0Id: Joi.string().required(),
       avatar: Joi.string().uri().required(),
-    }
+    },
   },
   updateUserDto: {
     params: {
@@ -16,6 +16,15 @@ module.exports = {
       name: Joi.string().min(3).optional(),
       auth0Id: Joi.string().optional(),
       avatar: Joi.string().uri().optional(),
-    }
-  }
-}
+    },
+  },
+  findOrCreateByAuth0Dto: {
+    params: {
+      auth0Id: Joi.string().required(),
+    },
+    body: {
+      name: Joi.string().min(3).required(),
+      avatar: Joi.string().uri().required(),
+    },
+  },
+};

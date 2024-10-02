@@ -1,12 +1,15 @@
 const express = require('express');
+const cors = require('cors');
 const UserRouter = require('../routes/user.route');
 const BookRouter = require('../routes/book.route');
+
 const {
   logErrors,
   ormErrorHandler,
   boomErrorHandler,
   errorHandler,
 } = require('../middleware/error.handler');
+
 class Server {
   constructor(port) {
     this.port = port;
@@ -24,6 +27,7 @@ class Server {
     });
   }
   settings() {
+    this.app.use(cors());
     this.app.use(express.json());
   }
   setMiddlewares() {

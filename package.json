@@ -16,8 +16,10 @@
   "description": "",
   "dependencies": {
     "@hapi/boom": "^10.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "express-oauth2-jwt-bearer": "^1.6.0",
     "joi": "^17.13.3",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",

@@ -1,8 +1,10 @@
-const { configDotenv } = require("dotenv");
+const { configDotenv } = require('dotenv');
 
-configDotenv()
+configDotenv();
 module.exports = {
   NODE_ENV: process.env.NODE_ENV || 'development',
+  AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
+  AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
   sequelizeConfig: {
     development: {
       url: process.env.SEQ_URI_DEV,
