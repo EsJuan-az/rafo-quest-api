@@ -4,11 +4,17 @@ const {
 } = require('../libs/sequelize');
 class BookService {
   static async findAll(offset, limit) {
-    const result = await Book.findAll({
-      offset,
+    const { rows, count } = await Book.findAndCountAll({
+      offset: offset * limit,
       limit,
     });
-    return result;
+    const totalPages = Math.ceil(count / limit);
+    return {
+      rows,
+      totalItems: count,
+      currentPage: offset,
+      totalPages,
+    };
   }
   static async findOne(id) {
     const result = await Book.findOne({

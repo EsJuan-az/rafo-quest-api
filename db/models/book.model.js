@@ -20,6 +20,7 @@ const bookSchema = {
     field: 'sort_index',
     type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   },
   cover: {
     type: DataTypes.STRING,

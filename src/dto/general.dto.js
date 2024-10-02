@@ -1,15 +1,15 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 module.exports = {
   findOneDto: {
-    params: {
+    params: Joi.object({
       id: Joi.string().required(),
-    }
+    }),
   },
   findAllDto: {
-    query: {
+    query: Joi.object({
       offset: Joi.number().integer().optional(),
-      limit: Joi.number().integer().optional()
-    }
-  }
-}
+      limit: Joi.number().integer().optional(),
+    }),
+  },
+};

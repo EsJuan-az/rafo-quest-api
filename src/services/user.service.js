@@ -17,6 +17,9 @@ class UserService {
       },
     });
     if (!result) {
+      if (!data) {
+        throw notFound('user not found');
+      }
       result = User.create({
         auth0Id,
         name: data.name,

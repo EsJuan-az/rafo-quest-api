@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   async findOrCreateByAuth0(req, res, next) {
-    const { auth0Id } = req.params;
+    const auth0Id = req.auth.payload.sub;
     const { body: userData } = req;
     try {
       const resp = await UserService.findOrCreateByAuth0Id(auth0Id, userData);

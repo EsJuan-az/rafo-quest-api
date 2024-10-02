@@ -20,7 +20,7 @@ const UserRouter = Router();
 UserRouter.get('/', [validatorHandler(findAllDto)], findAllUser);
 UserRouter.get('/:id', [validatorHandler(findOneDto)], findUser);
 UserRouter.post(
-  '/auth/:auth0Id',
+  '/auth',
   [auth0Check, validatorHandler(findOrCreateByAuth0Dto)],
   findOrCreateByAuth0,
 );

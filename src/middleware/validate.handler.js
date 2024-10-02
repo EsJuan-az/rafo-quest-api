@@ -5,7 +5,7 @@ module.exports = {
 	validatorHandler(reqSchemas){
 		return function(req, res, next){
 			for( let field of Object.keys(reqSchemas) ){
-				const { error } = Joi.object(reqSchemas[field]).validate(req[field]);
+				const { error } = reqSchemas[field].validate(req[field]);
 				if( error ){
 					return next( badRequest( error ) );
 				}

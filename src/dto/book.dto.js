@@ -2,24 +2,25 @@ const Joi = require('joi');
 
 module.exports = {
   createBookDto: {
-    body: {
+    body: Joi.object({
       name: Joi.string().required(),
+      // In case of trophyType to be canon, sortIndex is required, otherwise forbidden.
       trophyType: Joi.string().valid('nini', 'canon', 'bonus').required(),
-      sortIndex: Joi.number().integer().required(),
+      sortIndex: Joi.number().integer().optional(),
       cover: Joi.string().uri().required(),
       landscape: Joi.string().uri().required(),
-    },
+    }),
   },
   updateBookDto: {
-    params: {
+    params: Joi.object({
       id: Joi.string().required(),
-    },
-    body: {
+    }),
+    body: Joi.object({
       name: Joi.string().optional(),
       trophyType: Joi.string().valid('nini', 'canon', 'bonus').optional(),
       sortIndex: Joi.number().integer().optional(),
       cover: Joi.string().uri().optional(),
       landscape: Joi.string().uri().optional(),
-    },
+    }),
   },
 };
