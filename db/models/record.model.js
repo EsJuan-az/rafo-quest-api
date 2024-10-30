@@ -16,7 +16,7 @@ const recordsSchema = {
   },
   bookId: {
     field: 'book_id',
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
     allowNull: false,
     foreignKey: true,
     references: {
@@ -26,7 +26,7 @@ const recordsSchema = {
   },
   userId: {
     field: 'user_id',
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
     allowNull: false,
     foreignKey: true,
     references: {

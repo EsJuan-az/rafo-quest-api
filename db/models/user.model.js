@@ -17,13 +17,20 @@ const userSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  avatar: {
+  color: {
     type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue: '#fff',
   },
 };
 class User extends Model {
-  static associate(models) {}
+  static associate(models) {
+    this.belongsToMany(models.Book, {
+      as: 'bookData',
+      through: models.UserBookData,
+      foreignKey: 'user_id',
+      otherKey: 'book_id',
+    });
+  }
   static config(sequelize) {
     return {
       sequelize,

@@ -30,6 +30,11 @@ const bookSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  resourceName: {
+    field: 'resource_name',
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 };
 class Book extends Model {
   static associate(models) {}

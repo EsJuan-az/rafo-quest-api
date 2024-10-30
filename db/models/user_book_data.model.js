@@ -5,7 +5,7 @@ const USER_BOOK_DATA_TABLE = 'user_book_data';
 const userBookDataSchema = {
   bookId: {
     field: 'book_id',
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
     allowNull: false,
     foreignKey: true,
     references: {
@@ -15,7 +15,7 @@ const userBookDataSchema = {
   },
   userId: {
     field: 'user_id',
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
     allowNull: false,
     foreignKey: true,
     references: {
@@ -28,10 +28,9 @@ const userBookDataSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  finished: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
+  status: {
+    type: DataTypes.ENUM('pending', 'in process', 'finished'),
+    defaultValue: 'pending',
   },
   stars: {
     type: DataTypes.FLOAT,
@@ -61,7 +60,7 @@ class UserBookData extends Model {
       sequelize,
       tableName: USER_BOOK_DATA_TABLE,
       timestamps: true,
-      modelName: 'user_book_data',
+      modelName: 'UserBookData',
     };
   }
 }

@@ -14,30 +14,31 @@ class UserBookDataService {
     });
     return result;
   }
-  static async findOne(userId, id) {
+  static async findOne(userId, bookId) {
     const result = await UserBookData.findOne({
       where: {
         userId,
-        id,
+        bookId,
       },
       includes: ['book', 'user'],
     });
     if (!result) {
-      throw notFound('user_book_data not found');
+      throw notFound('book data not found');
     }
     return result;
   }
-  static async create(userId, userBookData) {
-    const result = await UserBookData.create({ userId, ...userBookData });
+  static async create(userId, data) {
+    console.log(data);
+    const result = await UserBookData.create({ userId, ...data });
     return result;
   }
-  static async update(userId, id, userBookData) {
-    const old = await UserBookDataService.findOne(userId, id);
+  static async update(userId, bookId, userBookData) {
+    const old = await UserBookDataService.findOne(userId, bookId);
     const result = await old.update(userBookData, { new: true });
     return result;
   }
-  static async delete(userId, id) {
-    const result = await UserBookDataService.findOne(userId, id);
+  static async delete(userId, bookId) {
+    const result = await UserBookDataService.findOne(userId, bookId);
     result.destroy();
     return result;
   }

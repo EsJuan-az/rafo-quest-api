@@ -12,6 +12,5 @@ services:
       - "5432:5432"  # Mapea el puerto 5432 del contenedor al puerto 5432 del host
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persistencia de datos
-      
 volumes:
   postgres_data:

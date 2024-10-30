@@ -9,6 +9,7 @@ module.exports = {
       sortIndex: Joi.number().integer().optional(),
       cover: Joi.string().uri().required(),
       landscape: Joi.string().uri().required(),
+      resourceName: Joi.string().optional(),
     }),
   },
   updateBookDto: {
@@ -21,6 +22,7 @@ module.exports = {
       sortIndex: Joi.number().integer().optional(),
       cover: Joi.string().uri().optional(),
       landscape: Joi.string().uri().optional(),
+      resourceName: Joi.string().optional(),
     }),
   },
 };

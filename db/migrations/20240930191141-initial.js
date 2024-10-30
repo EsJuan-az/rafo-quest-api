@@ -18,9 +18,9 @@ const userSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  avatar: {
+  color: {
     type: DataTypes.STRING,
-    allowNull: false,
+    defaultValue: '#fff',
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -68,6 +68,67 @@ const bookSchema = {
     allowNull: false,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
   },
+  resourceName: {
+    field: 'resource_name',
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+};
+
+const userBookDataSchema = {
+  bookId: {
+    field: 'book_id',
+    type: DataTypes.UUID,
+    allowNull: false,
+    foreignKey: true,
+    references: {
+      model: 'books',
+      key: 'id',
+    },
+  },
+  userId: {
+    field: 'user_id',
+    type: DataTypes.UUID,
+    allowNull: false,
+    foreignKey: true,
+    references: {
+      model: 'users',
+      key: 'id',
+    },
+  },
+  totalPages: {
+    field: 'total_pages',
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'in process', 'finished'),
+    defaultValue: 'pending',
+  },
+  stars: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  reviewTitle: {
+    field: 'review_title',
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  reviewText: {
+    field: 'review_text',
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -86,6 +147,7 @@ module.exports = {
      */
     await queryInterface.createTable('users', userSchema);
     await queryInterface.createTable('books', bookSchema);
+    await queryInterface.createTable('user_book_data', userBookDataSchema);
   },
 
   async down(queryInterface, Sequelize) {
@@ -95,6 +157,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.dropTable('user_book_data');
     await queryInterface.dropTable('books');
     await queryInterface.dropTable('users');
   },

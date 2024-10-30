@@ -13,24 +13,33 @@ const {
   updateUserBookDataDto,
   //   findOrCreateByAuth0Dto,
 } = require('../dto/user_book_data.dto');
+const { auth0AndAddUser } = require('../middleware/auth.handler');
 // const { auth0Check } = require('../middleware/auth.handler');
 const UserBookDataRouter = Router();
 
-UserBookDataRouter.get('/', [validatorHandler(findAllDto)], findAllUserBookData);
-UserBookDataRouter.get('/:id', [validatorHandler(findOneDto)], findUserBookData);
+UserBookDataRouter.get(
+  '/',
+  [auth0AndAddUser, validatorHandler(findAllDto)],
+  findAllUserBookData,
+);
+UserBookDataRouter.get(
+  '/:bookId',
+  [auth0AndAddUser, validatorHandler(findOneDto)],
+  findUserBookData,
+);
 UserBookDataRouter.post(
   '/',
-  [validatorHandler(createUserBookDataDto)],
+  [auth0AndAddUser, validatorHandler(createUserBookDataDto)],
   createUserBookData,
 );
 UserBookDataRouter.put(
-  '/:id',
-  [validatorHandler(updateUserBookDataDto)],
+  '/:bookId',
+  [auth0AndAddUser, validatorHandler(updateUserBookDataDto)],
   updateUserBookData,
 );
 UserBookDataRouter.delete(
-  '/:id',
-  [validatorHandler(findOneDto)],
+  '/:bookId',
+  [auth0AndAddUser, validatorHandler(findOneDto)],
   deleteUserBookData,
 );
 
