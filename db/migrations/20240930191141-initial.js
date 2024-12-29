@@ -2,6 +2,7 @@
 
 const { DataTypes, Sequelize } = require('sequelize');
 
+// User schema
 const userSchema = {
   id: {
     type: DataTypes.UUID,
@@ -18,10 +19,6 @@ const userSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  color: {
-    type: DataTypes.STRING,
-    defaultValue: '#fff',
-  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -34,6 +31,7 @@ const userSchema = {
   },
 };
 
+// Book schema
 const bookSchema = {
   id: {
     type: DataTypes.UUID,
@@ -45,11 +43,6 @@ const bookSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  trophyType: {
-    field: 'trophy_type',
-    type: DataTypes.ENUM('nini', 'canon', 'bonus'),
-    allowNull: false,
-  },
   sortIndex: {
     field: 'sort_index',
     type: DataTypes.INTEGER,
@@ -59,19 +52,10 @@ const bookSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  landscape: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  resourceName: {
-    field: 'resource_name',
-    type: DataTypes.STRING,
-    allowNull: true,
   },
   updatedAt: {
     type: DataTypes.DATE,
@@ -80,12 +64,12 @@ const bookSchema = {
   },
 };
 
+// UserBookData schema
 const userBookDataSchema = {
   bookId: {
     field: 'book_id',
     type: DataTypes.UUID,
     allowNull: false,
-    foreignKey: true,
     references: {
       model: 'books',
       key: 'id',
@@ -95,11 +79,15 @@ const userBookDataSchema = {
     field: 'user_id',
     type: DataTypes.UUID,
     allowNull: false,
-    foreignKey: true,
     references: {
       model: 'users',
       key: 'id',
     },
+  },
+  currentPage: {
+    field: 'current_page',
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
   },
   totalPages: {
     field: 'total_pages',
@@ -136,27 +124,61 @@ const userBookDataSchema = {
   },
 };
 
+// Records schema
+const recordsSchema = {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  createdAt: {
+    field: 'created_at',
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  },
+  pagesRead: {
+    field: 'pages_read',
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
+  bookId: {
+    field: 'book_id',
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'books',
+      key: 'id',
+    },
+  },
+  userId: {
+    field: 'user_id',
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id',
+    },
+  },
+};
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
     await queryInterface.createTable('users', userSchema);
     await queryInterface.createTable('books', bookSchema);
     await queryInterface.createTable('user_book_data', userBookDataSchema);
+    await queryInterface.createTable('records', recordsSchema);
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    await queryInterface.dropTable('records');
     await queryInterface.dropTable('user_book_data');
     await queryInterface.dropTable('books');
     await queryInterface.dropTable('users');

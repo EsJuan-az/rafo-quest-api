@@ -7,6 +7,11 @@ class UserService {
     const result = await User.findAll({
       offset,
       limit,
+      include: [
+        {
+          association: 'bookData', // Relación definida en el modelo
+        },
+      ],
     });
     return result;
   }
@@ -15,6 +20,11 @@ class UserService {
       where: {
         auth0Id,
       },
+      include: [
+        {
+          association: 'bookData', // Relación definida en el modelo
+        },
+      ],
     });
     if (!result) {
       if (!data) {
@@ -33,6 +43,11 @@ class UserService {
       where: {
         id,
       },
+      include: [
+        {
+          association: 'bookData', // Relación definida en el modelo
+        },
+      ],
     });
     if (!result) {
       throw notFound('user not found');

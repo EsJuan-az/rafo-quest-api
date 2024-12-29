@@ -1,5 +1,4 @@
 const { badRequest } = require('@hapi/boom');
-const Joi = require('joi');
 
 module.exports = {
   validatorHandler(reqSchemas) {

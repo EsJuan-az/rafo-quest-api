@@ -12,5 +12,13 @@ services:
       - "5432:5432"  # Mapea el puerto 5432 del contenedor al puerto 5432 del host
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persistencia de datos
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: rafo_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
 volumes:
   postgres_data:

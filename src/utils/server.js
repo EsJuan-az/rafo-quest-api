@@ -10,6 +10,7 @@ const {
   errorHandler,
 } = require('../middleware/error.handler');
 const UserBookDataRouter = require('../routes/user_book_data.route');
+const RecordsRouter = require('../routes/record.route');
 
 class Server {
   constructor(port) {
@@ -23,6 +24,7 @@ class Server {
     this.app.use('/user', UserRouter);
     this.app.use('/book', BookRouter);
     this.app.use('/book-data', UserBookDataRouter);
+    this.app.use('/read-record', RecordsRouter);
     // Configuración intermedia.
     this.app.get('/', (req, res) => {
       res.send('<h1>Rafo quest</h1>');

@@ -11,11 +11,6 @@ const bookSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  trophyType: {
-    field: 'trophy_type',
-    type: DataTypes.ENUM('nini', 'canon', 'bonus'),
-    allowNull: false,
-  },
   sortIndex: {
     field: 'sort_index',
     type: DataTypes.INTEGER,
@@ -26,18 +21,20 @@ const bookSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  landscape: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  resourceName: {
-    field: 'resource_name',
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
 };
 class Book extends Model {
-  static associate(models) {}
+  static associate(models) {
+    this.hasMany(models.UserBookData, {
+      as: 'userData',
+      foreignKey: 'bookId',
+    });
+    this.belongsToMany(models.User, {
+      as: 'users',
+      through: models.UserBookData,
+      otherKey: 'userId',
+      foreignKey: 'bookId',
+    });
+  }
   static config(sequelize) {
     return {
       sequelize,

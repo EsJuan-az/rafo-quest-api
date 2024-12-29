@@ -1,5 +1,5 @@
-const { ValidationError } = require("sequelize");
-const { error } = require("../utils/response");
+const { ValidationError } = require('sequelize');
+const { error } = require('../utils/response');
 
 function logErrors(err, req, res, next) {
   console.error(err);

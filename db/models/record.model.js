@@ -3,6 +3,11 @@ const { table: BOOK_TABLE } = require('./book.model');
 const { table: USER_TABLE } = require('./user.model');
 const RECORDS_TABLE = 'records';
 const recordsSchema = {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   createdAt: {
     field: 'created_at',
     type: DataTypes.DATE,
@@ -38,17 +43,17 @@ const recordsSchema = {
 class Record extends Model {
   static associate(models) {
     // records pertenece a un usuario
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
 
     // records pertenece a un libro
-    this.belongsTo(models.Book, { foreignKey: 'book_id', as: 'book' });
+    this.belongsTo(models.Book, { foreignKey: 'bookId', as: 'book' });
   }
   static config(sequelize) {
     return {
       sequelize,
       tableName: RECORDS_TABLE,
       timestamps: true,
-      modelName: 'Records',
+      modelName: 'Record',
     };
   }
 }

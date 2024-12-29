@@ -2,6 +2,8 @@ const {
   models: { Record },
 } = require('../libs/sequelize');
 const { notFound } = require('@hapi/boom');
+const UserBookDataService = require('./user_book_data.service');
+const UserService = require('./user.service');
 class RecordService {
   static async findAll(userId, offset, limit) {
     const result = await Record.findAll({
@@ -14,10 +16,9 @@ class RecordService {
     });
     return result;
   }
-  static async findOne(userId, id) {
+  static async findOne(id) {
     const result = await Record.findOne({
       where: {
-        userId,
         id,
       },
       includes: ['book', 'user'],
@@ -27,17 +28,41 @@ class RecordService {
     }
     return result;
   }
-  static async create(userId, record) {
-    const result = await Record.create({ userId, ...record });
+  static async findMany(userId, bookId) {
+    const result = await Record.findOne({
+      where: {
+        userId,
+        bookId,
+      },
+      includes: ['book', 'user'],
+    });
+    if (!result) {
+      throw notFound('record not found');
+    }
     return result;
   }
-  static async update(userId, id, record) {
-    const old = await RecordService.findOne(userId, id);
+  static async create(userId, record) {
+    let ubd = null;
+    if (record.currentPage) {
+      ubd = await UserBookDataService.update(userId, record.bookId, record);
+    } else {
+      ubd = await UserBookDataService.incrementCurrentPage(
+        userId,
+        record.bookId,
+        record.pagesRead,
+      );
+    }
+    const cbd = await UserService.findOne(userId);
+    const result = await Record.create({ userId, ...record });
+    return { Record: result, UserBookData: ubd, User: cbd };
+  }
+  static async update(id, record) {
+    const old = await RecordService.findOne(id);
     const result = await old.update(record, { new: true });
     return result;
   }
-  static async delete(userId, id) {
-    const result = await RecordService.findOne(userId, id);
+  static async delete(id) {
+    const result = await RecordService.findOne(id);
     result.destroy();
     return result;
   }
