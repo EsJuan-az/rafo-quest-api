@@ -1,9 +1,25 @@
+const { google } = require('googleapis');
+const config = require('../../config');
+
+const books = google.books({
+  version: 'v1',
+  auth: config.GOOGLE_API_KEY,
+});
+
 class ThirdPartyService {
-  static googleUrl = process.env.PUBLIC_GOOGLE_BOOKS || '';
   static async getVolumes(name) {
-    const response = await fetch(`${this.googleUrl}/volumes?q=intitle:${name}`);
-    const data = await response.json();
-    return data; // Devuelve los datos del usuario
+    try {
+      // Realiza la búsqueda de volúmenes con el cliente oficial de Google Books API
+      const response = await books.volumes.list({
+        q: `intitle:${name}`,
+      });
+
+      return response.data.items || []; // Devuelve los elementos encontrados o un array vacío
+    } catch (error) {
+      console.error('Error al obtener los volúmenes:', error);
+      throw new Error('No se pudieron obtener los volúmenes');
+    }
   }
 }
+
 module.exports = ThirdPartyService;

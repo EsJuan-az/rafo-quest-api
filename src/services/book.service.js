@@ -41,9 +41,9 @@ class BookService {
     const placeholder = 'https://covers.openlibrary.org/b/id/10909258-L.jpg';
     if (!book.cover) {
       const volumes = await ThirdPartyService.getVolumes(book.name);
-      if (volumes.totalItems > 0) {
+      if (volumes.length > 0) {
         book.cover =
-          volumes?.items[0]?.volumeInfo?.imageLinks?.thumbnail || placeholder;
+          volumes[0]?.volumeInfo?.imageLinks?.thumbnail || placeholder;
       } else {
         book.cover = placeholder;
       }

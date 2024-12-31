@@ -3,6 +3,7 @@ const { configDotenv } = require('dotenv');
 configDotenv();
 module.exports = {
   NODE_ENV: process.env.NODE_ENV || 'development',
+  GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
   AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
   sequelizeConfig: {
